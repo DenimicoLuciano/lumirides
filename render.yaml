@@ -1,0 +1,22 @@
+# Render blueprint: one Docker web service on the free plan.
+# App data lives in a Turso cloud database (TURSO_* env vars, set in the
+# dashboard) so accounts and bookings survive redeploys. Without them the
+# app falls back to a local file, which is ephemeral on the free plan.
+services:
+  - type: web
+    name: lumirides
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/config
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /app/data
+      - key: DRIVER_EMAIL
+        value: denimdenimdenim00@gmail.com # the account with this email is the driver
+      - key: TURSO_DATABASE_URL
+        sync: false # set in the Render dashboard — free cloud DB for permanent accounts + bookings
+      - key: TURSO_AUTH_TOKEN
+        sync: false # set in the Render dashboard
