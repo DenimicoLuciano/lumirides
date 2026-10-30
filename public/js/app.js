@@ -306,13 +306,13 @@ const App = {
           <div class="stat"><div class="v">${money(stats.earnings)}</div><div class="k">Earnings (paid fares)</div></div>
           <div class="stat"><div class="v">${active}</div><div class="k">Active bookings</div></div>
         </div>
-        ${bookings.length ? bookings.map(b => this.driverCard(b)).join('') : '<div class="card empty">No bookings yet.</div>'}`;
+        ${bookings.length ? bookings.map(b => this.driverBookingCard(b)).join('') : '<div class="card empty">No bookings yet.</div>'}`;
     } catch (e) {
       el.innerHTML = `<h2>Driver dashboard 🧭</h2><div class="card">Couldn't load the dashboard (${esc(e.message)}).</div>`;
     }
   },
 
-  driverCard(b) {
+  driverBookingCard(b) {
     const r = b.rider || {};
     const acts = [];
     if (b.status === 'requested') {
